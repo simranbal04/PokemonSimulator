@@ -28,6 +28,9 @@ class ViewController: UIViewController, WCSessionDelegate  {
         //@TODO
     }
     
+   
+        var selectimage : String = ""
+    
     // MARK: Receive messages from Watch
     // -----------------------------------
     
@@ -44,6 +47,17 @@ class ViewController: UIViewController, WCSessionDelegate  {
         // 2. Also, print a debug message to the phone console
         // To make the debug message appear, see Moodle instructions
         print("Received a message from the watch: \(message)")
+//        let nameExists:Bool = (message["Pokemon"] != nil)
+        
+        DispatchQueue.main.async {
+            self.outputLabel.insertText("\nSaving Pokemon")
+        }
+        UserDefaults.standard.set(message, forKey: "pokemonData")
+        DispatchQueue.main.async {
+            self.outputLabel.insertText("\nPokemon saved")
+        }
+
+        
     }
 
     
@@ -84,7 +98,7 @@ class ViewController: UIViewController, WCSessionDelegate  {
         
         // 1. Try to send a message to the phone
         if (WCSession.default.isReachable) {
-            let message = ["course": "MADT"]
+            let message = ["name": "Pikachu"]
             WCSession.default.sendMessage(message, replyHandler: nil)
             // output a debug message to the UI
             outputLabel.insertText("\nMessage sent to watch")
@@ -100,11 +114,35 @@ class ViewController: UIViewController, WCSessionDelegate  {
     
     // MARK: Choose a Pokemon actions
     
-    @IBAction func pokemonButtonPressed(_ sender: Any) {
+    @IBAction func pokemonButtonPressed(_ sender: Any)
+    {
+        
         print("You pressed the pokemon button")
+        if (WCSession.default.isReachable)
+        {
+        let message = ["name": "pikachu"]
+        WCSession.default.sendMessage(message, replyHandler: nil)
+        self.selectimage = "pikachu"
+        }
+        else{
+                  print("PHONE: Cannot reach watch")
+            }
+        
     }
-    @IBAction func caterpieButtonPressed(_ sender: Any) {
-        print("You pressed the caterpie button")
+    @IBAction func caterpieButtonPressed(_ sender: Any)
+    {
+        
+         if (WCSession.default.isReachable)
+               {
+                   print("You pressed the caterpie button")
+                   let message = ["name": "caterpie"]
+                   WCSession.default.sendMessage(message, replyHandler: nil)
+                   self.selectimage = "caterpie"
+           }
+               else{
+                   print("PHONE: Cannot reach watch")
+               }
+           
     }
     
     

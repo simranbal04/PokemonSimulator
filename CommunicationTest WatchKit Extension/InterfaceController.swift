@@ -4,13 +4,14 @@
 //
 //  Created by Parrot on 2019-10-26.
 //  Copyright © 2019 Parrot. All rights reserved.
-//
+// simi 
 
 import WatchKit
 import Foundation
 import WatchConnectivity
 
-class InterfaceController: WKInterfaceController, WCSessionDelegate {
+class InterfaceController: WKInterfaceController, WCSessionDelegate
+{
 
     
     // MARK: Outlets
@@ -24,6 +25,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     // Label for other messages (HP:100, Hunger:0)
     @IBOutlet var outputLabel: WKInterfaceLabel!
     
+
+    var pokeName = ""
     
     
     // MARK: Delegate functions
@@ -35,13 +38,21 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     // 3. Get messages from PHONE
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any])
+    {
         print("WATCH: Got message from Phone")
         // Message from phone comes in this format: ["course":"MADT"]
-        let messageBody = message["course"] as! String
-        messageLabel.setText(messageBody)
+        
+        let message: String = message["name"] as! String
+              let pokeName = UIImage(imageLiteralResourceName: message)
+              self.pokemonImageView.setImage(pokeName)
+              self.messageLabel.setText("pikachu")
+              
+        
+        
     }
-    
+        
+//      
 
 
     
