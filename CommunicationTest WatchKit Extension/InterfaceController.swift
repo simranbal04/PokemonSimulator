@@ -27,6 +27,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate
     
 
     var pokeName = ""
+    var pokemonName = ""
     
     
     // MARK: Delegate functions
@@ -116,6 +117,27 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate
     // MARK: Functions for Pokemon Parenting
     @IBAction func nameButtonPressed() {
         print("name button pressed")
+        self.PokemonName()
+    }
+    
+    func PokemonName()
+    {
+        let suggestedResponses = ["Jimmy", "Rolo ", "Tom"]
+                presentTextInputController(withSuggestions: suggestedResponses, allowedInputMode: .plain) {
+
+            (results) in
+                    
+                   
+           if (results != nil && results!.count > 0) {
+              // 2. write your code to process the person's response
+            let userResponse = results?.first as? String
+            self.pokemonName = userResponse!
+            self.nameLabel.setText("\(self.pokemonName) is not Hungry")
+//            self.responseLabel.setText(userResponse)
+            
+           }
+        }
+
     }
 
     @IBAction func startButtonPressed() {
